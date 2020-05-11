@@ -12,7 +12,6 @@ export default function App() {
   };
 
   const onGoalDelete = (id) => {
-    console.log("a,", id);
     setGoals((goals) => {
       return goals.filter((goal) => goal.id !== id);
     });
