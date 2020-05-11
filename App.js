@@ -1,43 +1,37 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  ScrollView,
-  FlatList,
-} from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 
 import GoalItem from "./components/GoalItem";
+import GoalInput from "./components/GoalInput";
 
 export default function App() {
-  const [goal, setGoal] = useState("");
   const [goals, setGoals] = useState([]);
 
-  const goalInputHandler = (text) => {
-    setGoal(text);
+  const addGoalHandler = (goal) => {
+    setGoals([...goals, { id: Math.random().toString(), value: goal }]);
   };
 
-  const addGoalHandler = () => {
-    setGoals([...goals, { id: Math.random.toString(), value: goal }]);
+  const onGoalDelete = (id) => {
+    console.log("a,", id);
+    setGoals((goals) => {
+      return goals.filter((goal) => goal.id !== id);
+    });
   };
 
   return (
     <View style={styles.screen}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Enter Goals"
-          style={styles.input}
-          onChangeText={goalInputHandler}
-        />
-        <Button title="Add Goals" onPress={addGoalHandler} />
-      </View>
+      <GoalInput addGoalHandler={addGoalHandler} />
 
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={goals}
-        renderItem={(itemData) => <GoalItem title={itemData.item.value} />}
+        renderItem={(itemData) => (
+          <GoalItem
+            id={itemData.item.id}
+            onDelete={onGoalDelete}
+            title={itemData.item.value}
+          />
+        )}
       />
     </View>
   );
@@ -46,18 +40,5 @@ export default function App() {
 const styles = StyleSheet.create({
   screen: {
     padding: 50,
-  },
-  inputContainer: {
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  input: {
-    borderBottomColor: "black",
-    borderBottomWidth: 1,
-    padding: 5,
-    width: "60%",
   },
 });
