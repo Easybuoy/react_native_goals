@@ -23,7 +23,7 @@ const GoalInput = ({ addGoalHandler, isAddMode, onCancel }) => {
         />
 
         <View style={styles.buttonContainer}>
-          <Button title="Add Goals" onPress={onAddGoalHandler} />
+          <Button title="Add Goal" onPress={onAddGoalHandler} />
           <Button title="Cancel" color="red" onPress={onCancel} />
         </View>
       </View>
@@ -45,8 +45,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buttonContainer: {
+    width: "100%",
     display: "flex",
     flexDirection: "row",
+    justifyContent: "space-around",
   },
 });
 
